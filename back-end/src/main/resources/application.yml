@@ -1,0 +1,76 @@
+spring:
+  application:
+    name: back-end
+
+  # Database Configuration
+  datasource:
+    url: jdbc:postgresql://localhost:5432/sport-db
+    username: postgres
+    password: 123456
+    driver-class-name: org.postgresql.Driver
+
+  # JPA Configuration
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    open-in-view: false
+
+  # Server Configuration
+  server:
+    port: 8080
+    error:
+      include-message: always
+      include-binding-errors: always
+
+# JWT Configuration
+jwt:
+  # Secret key (Base64 encoded, minimum 512 bits = 64 bytes)
+  # Generate với: openssl rand -base64 64
+  secret: ${JWT_SECRET:u2G2lN7rN2nYx8x4PpV9nQ0v6VnWjz9mT1q3zL0B7fQ5lCx8YyN6vF3wKpB2sX9q}
+
+  expiration:
+    # Access token: 15 phút
+    access: 900000 # 15 * 60 * 1000 milliseconds
+    # Refresh token: 7 ngày
+    refresh: 604800000 # 7 * 24 * 60 * 60 * 1000 milliseconds
+
+  refresh:
+    # Số lượng refresh token tối đa mỗi user
+    max-tokens-per-user: 5
+    # Bật/tắt refresh token rotation
+    rotation:
+      enabled: true
+    # Cron expression để cleanup expired tokens (mặc định: 2h sáng mỗi ngày)
+    cleanup:
+      cron: "0 0 2 * * ?"
+
+  # Cookie Configuration (Enterprise Best Practice)
+  cookie:
+    # Tên cookie cho refresh token
+    name: refreshToken
+    # Max age của cookie (7 ngày = 604800 seconds)
+    max-age: 604800
+    # Secure flag: chỉ gửi cookie qua HTTPS (true cho production, false cho dev)
+    secure: ${JWT_COOKIE_SECURE:false}
+    # HttpOnly flag: không cho phép JavaScript đọc cookie (chống XSS)
+    http-only: true
+    # SameSite: Strict (chống CSRF), Lax, hoặc None
+    # Strict: cookie chỉ gửi khi request từ cùng site
+    # Lax: cookie gửi khi navigate từ external site (phù hợp cho OAuth redirect)
+    # None: yêu cầu Secure=true
+    same-site: ${JWT_COOKIE_SAME_SITE:Lax}
+    # Path: cookie available cho tất cả paths
+    path: /
+
+# Logging Configuration
+logging:
+  level:
+    org.kun.backend: DEBUG
+    org.springframework.security: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
