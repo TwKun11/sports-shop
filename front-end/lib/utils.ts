@@ -50,3 +50,4 @@ export function debounce<T extends (...args: unknown[]) => void>(
     timeout = setTimeout(later, wait);
   };
 }
+

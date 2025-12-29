@@ -64,3 +64,4 @@ export const catalogApi = {
     return response.data;
   },
 };
+

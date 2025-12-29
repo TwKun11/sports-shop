@@ -37,3 +37,4 @@ export const checkoutApi = {
     return response.data;
   },
 };
+

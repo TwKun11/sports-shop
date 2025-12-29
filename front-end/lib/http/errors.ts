@@ -37,3 +37,4 @@ export function handleApiError(error: unknown): string {
 export function isApiError(error: unknown): error is ApiError {
   return error instanceof ApiError;
 }
+

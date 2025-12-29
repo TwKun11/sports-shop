@@ -29,3 +29,4 @@ export function hasRole(user: { role?: string } | null, role: string): boolean {
 export function isAdmin(user: { role?: string } | null): boolean {
   return hasRole(user, "admin");
 }
+

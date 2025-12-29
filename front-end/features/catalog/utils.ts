@@ -19,3 +19,4 @@ export function getProductImageUrl(
 export function getProductSlug(product: Product): string {
   return product.slug || product.id;
 }
+

@@ -18,3 +18,4 @@ export function calculateTotal(
   const tax = calculateTax(subtotal, taxRate);
   return subtotal + tax;
 }
+

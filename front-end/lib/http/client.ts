@@ -4,14 +4,14 @@ import axios, {
   InternalAxiosRequestConfig,
 } from "axios";
 import { ApiResponse } from "@/types/api";
+import { config } from "@/lib/config";
 import {
   getAccessToken,
   setAccessToken,
   clearAccessToken,
 } from "@/lib/authToken";
 
-const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080/api";
+const API_BASE_URL = config.api.baseUrl;
 
 // Tạo axios instance
 const apiClient: AxiosInstance = axios.create({
@@ -123,7 +123,7 @@ apiClient.interceptors.response.use(
         // Refresh failed - xóa token và redirect về login
         if (typeof window !== "undefined") {
           clearAccessToken();
-          window.location.href = "/auth/login";
+          window.location.href = "/login";
         }
 
         return Promise.reject(refreshError);
